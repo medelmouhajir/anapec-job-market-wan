@@ -1,0 +1,41 @@
+isli_version: "2.0"
+id: "anapec-job-market-wan"
+name: "ANAPEC Job Market Scraper"
+description: "Scrapes job market signals (sector, region, contract type, experience level) from ANAPEC publicly listed jobs."
+version: "1.0.0"
+author: "Antigravity"
+category: "web"
+
+runtime:
+  port: 8000
+  build:
+    context: "."
+    dockerfile: "Dockerfile"
+
+auth:
+  type: "internal_jwt"
+
+tools:
+  - name: "scrape_jobs"
+    description: "Scrapes live job postings from ANAPEC."
+    endpoint: "scrape-jobs"
+    method: "POST"
+    parameters:
+      type: "object"
+      properties:
+        keyword: 
+          type: "string"
+          description: "Search keyword for job title or company."
+        region: 
+          type: "string"
+          description: "Filter jobs by region."
+        sector: 
+          type: "string"
+          description: "Filter jobs by sector."
+        contract_type: 
+          type: "string"
+          description: "Filter by contract type (e.g. CDI, CDD)."
+        limit: 
+          type: "integer"
+          description: "Maximum number of results to return (default 50)."
+      required: []
